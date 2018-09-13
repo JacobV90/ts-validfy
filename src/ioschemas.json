@@ -1,0 +1,1 @@
+{"TestObject":{"$ref":"#/definitions/TestObject","definitions":{"TestObject":{"type":"object","properties":{"prop":{"type":"string"},"keyword":{"type":"string"}},"required":["keyword","prop"]}},"$schema":"http://json-schema.org/draft-07/schema#"}}
