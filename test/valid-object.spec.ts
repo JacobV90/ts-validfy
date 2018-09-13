@@ -9,7 +9,7 @@ describe('ValidIO', function() {
 
     before(() => {
         TypeParser.parse();
-        const test = new TestObject({prop: 'test', keyword: 'test'});
+        const test = new TestObject({prop: 'test', test: 'test'});
         Validators.initialize();
         console.log(test.isValid());
     })

@@ -7,6 +7,9 @@ export abstract class ValidObject {
     }
 
     public isValid() {
-        return Validators.get(this.constructor.name)(this);
+        let validator = Validators.get(this.constructor.name);
+        const isValid = validator(this);
+
+        return {valid: isValid, errors: validator.errors}
     }
 }
