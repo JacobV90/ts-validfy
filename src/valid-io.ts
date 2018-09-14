@@ -1,4 +1,5 @@
 import { Validators } from './validators';
+import { IsValidResponse } from './types';
 
 export abstract class ValidObject {
 
@@ -6,10 +7,8 @@ export abstract class ValidObject {
         Object.assign(this, data);
     }
 
-    public isValid() {
+    public isValid(): IsValidResponse {
         let validator = Validators.get(this.constructor.name);
-        const isValid = validator(this);
-
-        return {valid: isValid, errors: validator.errors}
+        return {valid: validator(this), errors: validator.errors}
     }
 }

@@ -20,3 +20,8 @@ export type IODefinitions = {
 export type ValidatorMap = {
     [name: string]: Ajv.ValidateFunction;
 }
+
+export type IsValidResponse = {
+    errors: Ajv.ErrorObject[] | undefined;
+    valid: boolean | PromiseLike<any>;
+}
