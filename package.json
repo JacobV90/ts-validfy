@@ -4,14 +4,15 @@
   "description": "A module that provides run time type checking for typescript applications",
   "main": "index.js",
   "bin": {
-    "parse-types": "./dist/type-parser-cli.js"
+    "create-schemas": "./dist/type-parser-cli.js"
   },
   "repository": "git@github.com:JacobV90/valid-io.git",
   "author": "Jacob Veal <jacobveal90@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "parse": "ts-node ./src/lib/generator.cli.ts",
     "build": "tsc",
-    "test": "mocha --opts ./mocha.opts test/*.spec.ts"
+    "test": "nyc mocha --opts ./mocha.opts test/*.spec.ts"
   },
   "dependencies": {
     "ajv": "^6.5.3",
@@ -28,7 +29,32 @@
     "@types/node": "^10.9.4",
     "chai": "^4.1.2",
     "mocha": "^5.2.0",
+    "nyc": "^13.0.1",
     "ts-node": "^7.0.1",
+    "tslint": "^5.11.0",
     "tslint-config-airbnb": "^5.11.0"
+  },
+  "validation": {
+    "include": "./test/*.ts",
+    "outDir": "./test/"
+  },
+  "nyc": {
+    "include": [
+      "src/**/*.ts"
+    ],
+    "exclude": [
+      "src/lib/config.ts",
+      "src/lib/type-parse.ts",
+      "src/lib/generator.cli.ts"
+    ],
+    "extension": [
+      ".ts"
+    ],
+    "reporter": [
+      "text-summary",
+      "html"
+    ],
+    "sourceMap": true,
+    "instrument": true
   }
 }

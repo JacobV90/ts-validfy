@@ -1,4 +1,4 @@
-import { ValidObject } from '../src/valid-object';
+import { ValidObject } from '../src/lib/valid-object';
 
 export class TestObject extends ValidObject {
     public string: string;

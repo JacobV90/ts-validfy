@@ -1,14 +1,12 @@
 import * as fs from 'fs';
 import * as ts from 'typescript';
-import {resolve} from "path";
 import * as TJS from "typescript-json-schema";
 import chalk from 'chalk';
-import { IODefinitions, SchemaDoc} from './types';
+import { Schemas} from './types';
 import { config } from './config';
-const tsconfig  = require('../tsconfig.json');
+const tsconfig  = require(process.cwd() + '/tsconfig.json');
+const glob = require('glob-fs')({ gitignore: true });
 
-let glob = require('glob-fs')({ gitignore: true });
-const sourceFiles = glob.readdirSync(config.include);
 const errors: string[] = [];
 const settings: TJS.PartialArgs = {
   required: true,
@@ -16,8 +14,8 @@ const settings: TJS.PartialArgs = {
   topRef: true
 };
 
-let ioDefs: IODefinitions[] = [];
-let schemaDoc: SchemaDoc = {};
+let typeSymbols: string[] = [];
+let schemas: Schemas = {};
   
 export class TypeParser {
 
@@ -25,6 +23,7 @@ export class TypeParser {
     console.log(chalk.cyan('Parsing ts source files...'));
     console.log('\r');
 
+    const sourceFiles = glob.readdirSync(config.include);
     let generator: TJS.JsonSchemaGenerator;
 
     try {
@@ -41,16 +40,16 @@ export class TypeParser {
       throw error;
     }
   
-    ioDefs.forEach((io:any) => {
-      schemaDoc[io.name] = generator.getSchemaForSymbol(io.name);
+    typeSymbols.forEach((symbol: string) => {
+      schemas[symbol] = generator.getSchemaForSymbol(symbol);
     });
   
-    fs.writeFileSync(config.outDir + 'ioschemas.json', JSON.stringify(schemaDoc), 'utf-8');
+    fs.writeFileSync(config.outDir + '.schemas.json', JSON.stringify(schemas), 'utf-8');
     errors.forEach((error: string) => {
       console.log(chalk.redBright(error));
     })
     console.log('\r');
-    console.log(chalk.bold.greenBright('Finished generating IO validation schemas'));
+    console.log(chalk.bold.greenBright('Successfully generated object validation schemas'));
     console.log('\r');
 
   }
@@ -59,9 +58,7 @@ export class TypeParser {
       if(node.heritageClauses) {
         node.heritageClauses.forEach((heritageClause: ts.HeritageClause) => {
           if (heritageClause.token === 85 && heritageClause.getText().includes('ValidObject')) {
-            ioDefs.push({
-              name: node.name.escapedText.toString()
-            })
+            typeSymbols.push(node.name.escapedText.toString())
           }
         });
       }

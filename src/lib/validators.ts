@@ -1,15 +1,15 @@
 import * as Ajv from 'ajv';
 import { resolve } from 'path';
 import { config } from './config';
-import { ValidatorMap, SchemaDoc } from './types';
+import { ValidatorMap, Schemas } from './types';
 
 export class Validators {
 
-    private static _fileName: string = 'ioschemas.json';
+    private static _fileName: string = '.schemas.json';
     private static _validators: ValidatorMap = {};
     private static _schemasCompiled: boolean = false;
     private static _schemasLoaded: boolean = false;
-    private static _schemas: SchemaDoc = {};
+    private static _schemas: Schemas = {};
     private static _compiler: Ajv.Ajv;
 
     public static get(name: string): Ajv.ValidateFunction {
