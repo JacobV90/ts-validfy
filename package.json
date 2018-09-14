@@ -12,7 +12,10 @@
   "scripts": {
     "parse": "ts-node ./src/lib/generator.cli.ts",
     "build": "tsc",
-    "test": "nyc mocha --opts ./mocha.opts test/*.spec.ts"
+    "lint": "tslint -p ./tsconfig.json",
+    "lint-fix": "tslint --fix -p ./tsconfig.json ",
+    "test": "nyc mocha --opts ./mocha.opts test/*.spec.ts",
+    "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "dependencies": {
     "ajv": "^6.5.3",

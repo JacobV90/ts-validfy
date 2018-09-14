@@ -5,48 +5,47 @@ import { ValidatorMap, Schemas } from './types';
 
 export class Validators {
 
-    private static _fileName: string = '.schemas.json';
-    private static _validators: ValidatorMap = {};
-    private static _schemasCompiled: boolean = false;
-    private static _schemasLoaded: boolean = false;
-    private static _schemas: Schemas = {};
-    private static _compiler: Ajv.Ajv;
+  private static fileName: string = '.schemas.json';
+  private static validators: ValidatorMap = {};
+  private static schemasCompiled: boolean = false;
+  private static schemasLoaded: boolean = false;
+  private static schemas: Schemas = {};
+  private static compiler: Ajv.Ajv;
 
-    public static get(name: string): Ajv.ValidateFunction {
-        if (!Validators._schemasLoaded) {
-            Validators.loadSchemas();
-            Validators.compileSchema(name);
-        }
-        else if (!Validators._validators[name]) {
-            Validators.compileSchema(name);
-        }
-        return Validators._validators[name];
+  public static get(name: string): Ajv.ValidateFunction {
+    if (!Validators.schemasLoaded) {
+      Validators.loadSchemas();
+      Validators.compileSchema(name);
+    } else if (!Validators.validators[name]) {
+      Validators.compileSchema(name);
     }
+    return Validators.validators[name];
+  }
 
-    public static init(): void {
-        if (!Validators._schemasLoaded) {
-            Validators.loadSchemas();
-        }
-        if (!Validators._schemasCompiled) {
-            Validators.compileSchemas();
-        }
+  public static init(): void {
+    if (!Validators.schemasLoaded) {
+      Validators.loadSchemas();
     }
+    if (!Validators.schemasCompiled) {
+      Validators.compileSchemas();
+    }
+  }
 
-    private static compileSchema(name: string) {
-        let validator = Validators._compiler.compile(Validators._schemas[name]);
-        Validators._validators[name] = validator;
-    }
+  private static compileSchema(name: string) {
+    const validator = Validators.compiler.compile(Validators.schemas[name]);
+    Validators.validators[name] = validator;
+  }
 
-    private static compileSchemas() {
-        for( const key of Object.keys(Validators._schemas)) {
-            Validators.compileSchema(key);
-        }
-        Validators._schemasCompiled = true;
+  private static compileSchemas() {
+    for (const key of Object.keys(Validators.schemas)) {
+      Validators.compileSchema(key);
     }
+    Validators.schemasCompiled = true;
+  }
 
-    private static loadSchemas() {
-        Validators._schemas = require(resolve(config.outDir, './' + Validators._fileName))            
-        Validators._compiler = new Ajv();
-        Validators._schemasLoaded = true;
-    }
+  private static loadSchemas() {
+    Validators.schemas = require(resolve(config.outDir, Validators.fileName));
+    Validators.compiler = new Ajv();
+    Validators.schemasLoaded = true;
+  }
 }

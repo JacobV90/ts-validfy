@@ -1,2 +1,15 @@
 {
+  "mocha.files.glob": "./test/*.spec.ts",
+	"mocha.requires": [
+    "ts-node/register",
+    "source-map-support/register"
+	],
+  "mocha.options": {
+    "recursive": true,
+    "timeout": 5000,
+    "colors": true,
+    "exit": true,
+    "ui-bdd": true
+  },
+  "editor.tabSize": 2
 }

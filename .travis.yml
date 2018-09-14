@@ -8,9 +8,13 @@ cache:
 jobs:
   include:
   - stage: Test
-    name: Tests
+    name: Test
     script: 
-      - yarn build
+      - yarn lint
       - yarn parse
       - yarn test
+  - stage: Build
+    name: Build
+    script: 
+      - yarn build
 after_success: yarn coverage
