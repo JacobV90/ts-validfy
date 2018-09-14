@@ -10,6 +10,7 @@ jobs:
   - stage: Test
     name: Tests
     script: 
-      - yarn
+      - yarn build
+      - yarn parse
       - yarn test
 after_success: yarn coverage

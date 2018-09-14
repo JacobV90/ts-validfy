@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { TestObject } from './valid-object';
 
 describe('Valid Object', function() {
-
+    
     it('Is valid given all parameters and correct data types', function(){
         let data = {
             string: 'test',
