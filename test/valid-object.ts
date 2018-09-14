@@ -1,4 +1,4 @@
-import { ValidObject } from '../src/valid-io';
+import { ValidObject } from '../src/valid-object';
 
 export class TestObject extends ValidObject {
     public string: string;
@@ -6,7 +6,6 @@ export class TestObject extends ValidObject {
     public object: object;
     public boolean: boolean;
     public optional?: string;
-
 
     constructor(data: any) {
         super(data);

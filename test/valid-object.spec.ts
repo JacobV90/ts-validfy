@@ -1,16 +1,8 @@
 import 'mocha';
 import { expect } from 'chai';
 import { TestObject } from './valid-object';
-import { TypeParser } from '../src/type-parser';
-import { Validators } from '../src/validators';
 
 describe('Valid Object', function() {
-
-    before(() => {
-        const start = Date.now();
-        Validators.initialize();
-        console.log(Date.now() - start);
-    })
 
     it('Is valid given all parameters and correct data types', function(){
         let data = {
