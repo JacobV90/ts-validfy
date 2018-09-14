@@ -10,7 +10,6 @@ jobs:
   - stage: Test
     name: Tests
     script: 
-      - cd examples/basic-crud/
       - yarn
       - yarn test
 after_success: yarn coverage
