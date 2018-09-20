@@ -62,3 +62,6 @@ typings/
 
 test/.schemas.json
 dist/*
+.DS_Store
+src/.DS_Store
+src/lib/.DS_Store

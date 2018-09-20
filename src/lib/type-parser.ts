@@ -57,7 +57,8 @@ export class TypeParser {
     if (ts.isClassDeclaration(node)) {
       if (node.heritageClauses) {
         node.heritageClauses.forEach((heritageClause: ts.HeritageClause) => {
-          if (heritageClause.token === 85 && heritageClause.getText().includes('ValidObject')) {
+          if (heritageClause.token === 85 &&
+             heritageClause.getText().indexOf('ValidObject') !== -1) {
             typeSymbols.push(node.name.escapedText.toString());
           }
         });
