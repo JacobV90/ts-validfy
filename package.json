@@ -15,6 +15,7 @@
     "lint": "tslint -p ./tsconfig.json",
     "lint-fix": "tslint --fix -p ./tsconfig.json ",
     "test": "nyc mocha --opts ./mocha.opts test/*.spec.ts",
+    "test-perf": "nyc mocha --opts ./mocha.opts test/performance.ts",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "dependencies": {
