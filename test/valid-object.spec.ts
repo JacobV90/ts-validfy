@@ -2,9 +2,22 @@
 
 import 'mocha';
 import { expect } from 'chai';
-import { TestObject } from './valid-object';
+import { ValidObject } from '../src/lib/valid-object';
 
 describe('Valid Object', function () {
+
+  class TestObject extends ValidObject {
+    public string: string;
+    public number: number;
+    public object: object;
+    public boolean: boolean;
+    public optional?: string;
+
+    constructor(data: any) {
+      super(data);
+    }
+  }
+
   it('Is valid given all parameters and correct data types', function () {
     const data = {
       string: 'test',

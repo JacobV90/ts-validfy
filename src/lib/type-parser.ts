@@ -4,7 +4,7 @@ import * as TJS from 'typescript-json-schema';
 import chalk from 'chalk';
 import { Schemas } from './types';
 import { config } from './config';
-const tsconfig  = require('${process.cwd()}/tsconfig.json');
+const tsconfig  = require(`${process.cwd()}/tsconfig.json`);
 const glob = require('glob-fs')({ gitignore: true });
 
 const errors: string[] = [];
