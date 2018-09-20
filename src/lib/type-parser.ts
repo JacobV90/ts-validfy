@@ -44,7 +44,7 @@ export class TypeParser {
       schemas[symbol] = generator.getSchemaForSymbol(symbol);
     });
 
-    fs.writeFileSync('${config.outDir}/.schemas.json', JSON.stringify(schemas), 'utf-8');
+    fs.writeFileSync(`${config.outDir}/.schemas.json`, JSON.stringify(schemas), 'utf-8');
     errors.forEach((error: string) => {
       console.log(chalk.redBright(error));
     });
