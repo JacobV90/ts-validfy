@@ -1,13 +1,10 @@
 import * as Ajv from 'ajv';
-import { resolve } from 'path';
-import { config } from './config';
 import { ValidatorMap, Schemas } from './types';
+import { FileSystem } from './file-system';
 
 export class Validators {
 
-  private static fileName: string = '.schemas.json';
   private static validators: ValidatorMap = {};
-  private static schemasCompiled: boolean = false;
   private static schemasLoaded: boolean = false;
   private static schemas: Schemas = {};
   private static compiler: Ajv.Ajv;
@@ -22,29 +19,17 @@ export class Validators {
     return Validators.validators[name];
   }
 
-  public static init(): void {
-    if (!Validators.schemasLoaded) {
-      Validators.loadSchemas();
-    }
-    if (!Validators.schemasCompiled) {
-      Validators.compileSchemas();
-    }
-  }
-
   private static compileSchema(name: string) {
-    const validator = Validators.compiler.compile(Validators.schemas[name]);
-    Validators.validators[name] = validator;
-  }
-
-  private static compileSchemas() {
-    for (const key of Object.keys(Validators.schemas)) {
-      Validators.compileSchema(key);
+    if (Validators.schemas[name]) {
+      const validator = Validators.compiler.compile(Validators.schemas[name]);
+      Validators.validators[name] = validator;
+    } else {
+      throw new Error(`${name} does not have a generated json schema`);
     }
-    Validators.schemasCompiled = true;
   }
 
   private static loadSchemas() {
-    Validators.schemas = require(resolve(config.outDir, Validators.fileName));
+    Validators.schemas = FileSystem.getSchemas();
     Validators.compiler = new Ajv();
     Validators.schemasLoaded = true;
   }
