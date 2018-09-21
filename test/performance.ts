@@ -78,10 +78,6 @@ describe('Performance', function () {
     }
   }
 
-  before(() => {
-    Validators.init();
-  });
-
   after((done) => {
     const vOvsJoiPercentage = Math.floor((1 - (voTime / joiTime)) * 100);
     const vOVsCvPercentage = Math.floor((1 - (voTime / cvTime)) * 100);
