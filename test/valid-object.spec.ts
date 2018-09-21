@@ -3,8 +3,9 @@
 import 'mocha';
 import { expect } from 'chai';
 import { ValidObject } from '../src/lib/valid-object';
+import { Validators } from '../src/lib/validators';
 
-describe('Valid Object', function () {
+describe('Valid Object (Primitives)', function () {
 
   class TestObject extends ValidObject {
     public string: string;
@@ -17,6 +18,20 @@ describe('Valid Object', function () {
       super(data);
     }
   }
+
+  it('Is valid given all parameters and correct data types', function () {
+    const data = {
+      string: 'test',
+      number: 456,
+      object: {
+        prop: 'test',
+      },
+      boolean: true,
+    };
+    const result = new TestObject(data).isValid();
+    expect(result.valid).to.equal(true);
+    expect(result.errors).to.equal(null);
+  });
 
   it('Is valid given all parameters and correct data types', function () {
     const data = {
